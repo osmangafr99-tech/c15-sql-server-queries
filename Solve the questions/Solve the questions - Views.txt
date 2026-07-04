@@ -1,0 +1,161 @@
+The First View (vFullEmployeeDetails):
+
+Create a View that joins the three tables together (Employees, Departments, Countries).
+
+It should display only the following fields:
+
+EmployeeID (Employee ID).
+FullName (First Name + space + Last Name).
+Salary (Monthly Salary).
+DepartmentName (The real department name).
+CountryName (The real country name).
+
+After creating it, write the query statement that runs it and displays all results.
+
+The Smart Second View (vUSAITStaff):
+
+Create a View that uses filtering. We want it to display the details of employees who work only in the 'IT' department and only from the 'USA'!
+
+After creating it, write its query statement.
+
+
+
+
+
+
+---------------------------------------
+---------------------------------------
+--q1:
+--The First View (vFullEmployeeDetails):
+
+--Create a View that joins the three tables together (Employees, Departments, Countries).
+
+--It should display only the following fields:
+
+--EmployeeID (Employee ID).
+--FullName (First Name + space + Last Name).
+--Salary (Monthly Salary).
+--DepartmentName (The real department name).
+--CountryName (The real country name).
+
+--After creating it, write the query statement that runs it and displays all results.
+
+Create view FullEmployeeDetails as
+SELECT Employees.ID, Employees.FirstName+' ' + Employees.LastName as FullName, Employees.MonthlySalary AS Salary, Countries.Name AS CountryName, Departments.Name AS DepartmentName
+FROM Employees 
+INNER JOIN
+ Departments ON Employees.DepartmentID = Departments.ID INNER JOIN
+ Countries ON Employees.CountryID = Countries.ID
+
+ Select * from FullEmployeeDetails
+
+ --q2:
+-- The Smart Second View (vUSAITStaff):
+
+--Create a View that uses filtering. We want it to display the details of employees who work only in the 'IT' department and only from the 'USA'!
+
+--After creating it, write its query statement.
+
+
+Create view USAITStaff as
+SELECT Employees.ID, Employees.FirstName+' ' + Employees.LastName as FullName, Employees.MonthlySalary AS Salary, Countries.Name AS CountryName, Departments.Name AS DepartmentName
+FROM Employees 
+INNER JOIN
+ Departments ON Employees.DepartmentID = Departments.ID INNER JOIN
+ Countries ON Employees.CountryID = Countries.ID
+ where Departments.Name ='IT' and  Countries.Name = 'USA';
+
+ Select * from USAITStaff
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------
+--------------------------------Questions To Practise: 
+
+Question 1 – IT Employees
+
+Create a view called IT_Employees that shows FirstName, LastName, and Departments.Name as DeptName for all employees who work in the IT department.
+
+Question 2 – Employees with Country
+
+Create a view called Employee_Countries that shows FirstName, LastName, and the country name (Countries.Name) for each employee.
+
+Question 3 – High Salary Employees
+
+Create a view called HighSalaryEmployees that shows FirstName, LastName, MonthlySalary, and department name (Departments.Name as DeptName) for all employees whose monthly salary is greater than 2700.
+
+Question 4 – Recent Hires
+
+Create a view called RecentHires that shows FirstName, LastName, HireDate, and department name (Departments.Name as DeptName) for all employees who were hired after January 1, 2022.
+
+Question 5 – Employee Salary with Bonus
+
+Create a view called EmployeeSalaryWithBonus that shows FirstName, LastName, MonthlySalary, BonusPerc, and a calculated column TotalSalary which is MonthlySalary + (MonthlySalary * BonusPerc / 100).
+
+
+
+
+
+
+
+-----------------------------
+-----------------------------  --sq1 :
+-- Question 1 – IT Employees
+--Create a view called IT_Employees that shows FirstName, LastName, and Departments.Name as DeptName for all employees who work in the IT department.
+CREATE VIEW IT_Employees AS
+SELECT Employees.FirstName, Employees.LastName, Departments.Name AS DeptName
+FROM Employees 
+INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+WHERE Departments.Name = 'IT';
+--
+SELECT * FROM IT_Employees;
+
+
+-- Question 2 – Employees with Country
+--Create a view called Employee_Countries that shows FirstName, LastName, and the country name (Countries.Name) for each employee.
+CREATE VIEW Employee_Countries AS
+SELECT Employees.FirstName, Employees.LastName, Countries.Name AS CountryName
+FROM Employees 
+INNER JOIN Countries ON Employees.CountryID = Countries.ID;
+
+SELECT * FROM Employee_Countries;
+
+
+-- Question 3 – High Salary Employees
+--Create a view called HighSalaryEmployees that shows FirstName, LastName, MonthlySalary, and department name (Departments.Name as DeptName) for all employees whose monthly salary is greater than 2700.
+CREATE VIEW HighSalaryEmployees AS
+SELECT Employees.FirstName, Employees.LastName, Employees.MonthlySalary, Departments.Name AS DeptName
+FROM Employees 
+INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+WHERE Employees.MonthlySalary > 2700;
+
+SELECT * FROM HighSalaryEmployees ORDER BY MonthlySalary;
+
+
+-- Question 4 – Recent Hires
+--Create a view called RecentHires that shows FirstName, LastName, HireDate, and department name (Departments.Name as DeptName) for all employees who were hired after January 1, 2022.
+CREATE VIEW RecentHires AS
+SELECT Employees.FirstName, Employees.LastName, Employees.HireDate, Departments.Name AS DeptName
+FROM Employees 
+INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+WHERE Employees.HireDate > '2022-01-01';
+
+SELECT * FROM RecentHires ORDER BY HireDate;
+
+
+-- Question 5 – Employee Salary with Bonus
+--Create a view called EmployeeSalaryWithBonus that shows FirstName, LastName, MonthlySalary, BonusPerc, and a calculated column TotalSalary which is MonthlySalary + (MonthlySalary * BonusPerc / 100).
+CREATE VIEW EmployeeSalaryWithBonus AS
+SELECT Employees.FirstName, Employees.LastName, Employees.MonthlySalary, Employees.BonusPerc,
+       Employees.MonthlySalary + (Employees.MonthlySalary * Employees.BonusPerc / 100) AS TotalSalary
+FROM Employees;
+
+SELECT * FROM EmployeeSalaryWithBonus;
