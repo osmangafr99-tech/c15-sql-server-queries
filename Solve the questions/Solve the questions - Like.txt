@@ -1,0 +1,22 @@
+--Find employees whose FirstName starts with "m" and ends with "n"   q1:
+select id ,FirstName from Employees
+where FirstName like 'm%' and FirstName like '%n'; 
+
+--Find employees whose FirstName has "e" as the second character   q2:
+select id ,FirstName from Employees
+where FirstName like '_e%'; 
+
+--Find employees whose FirstName contains "ar" anywhere   q3:
+
+select id ,FirstName from Employees
+where FirstName like '%ar%'; 
+
+--Find employees whose FirstName starts with "s" and has at least 5 characters   q4:
+
+select id ,FirstName from Employees
+where FirstName like 's___%'; 
+
+--Find employees whose FirstName starts with "a" OR ends with "d"  q5:
+select id ,FirstName from Employees
+where FirstName like 'a%' or FirstName like '%d'; 
+----------
