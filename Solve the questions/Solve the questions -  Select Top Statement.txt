@@ -1,0 +1,54 @@
+Question: List the departments where employees have salaries among the three lowest in the company.
+
+---------------------------------------
+--------------------------------------
+the solution:
+select  Departments.ID , Departments.Name from Departments
+where Departments.ID IN (
+select distinct  DepartmentID from Employees
+where MonthlySalary in(select distinct Top 3 MonthlySalary from Employees order by MonthlySalary asc))
+order by Departments.Name asc;
+
+--------------------------------------------
+-------------------------------------------
+three questions to practise
+
+1️⃣ Highest Bonus Hunt 🎯💰
+Question:  
+Write a query to select the ID, FirstName, LastName, and BonusPerc of employees whose bonus percentage is among the top 5 distinct highest values, ordered ascending by BonusPerc.
+
+2️⃣ Earliest Hires ⏳👩‍💼👨‍💼
+Question:  
+Write a query to display the ID, FirstName, LastName, and HireDate of employees who have the earliest 3 distinct hire dates, ordered ascending by HireDate.
+
+3️⃣ Youngest Employees 🎂🍼
+Question:  
+Write a query to select the ID, FirstName, LastName, and DateOfBirth of employees whose birthdates are among the latest 4 distinct values (i.e., the youngest employees), ordered ascending by DateOfBirth.
+
+
+
+
+
+
+------------------------------------
+
+--solve q1:
+--Highest Bonus Hunt :
+select distinct ID , FirstName , LastName ,MonthlySalary , BonusPerc from Employees
+where BonusPerc in( select distinct Top 5 BonusPerc from Employees order by BonusPerc desc)
+order by BonusPerc desc;
+
+--------------------------
+
+--solve q2:
+--Earliest Hires :
+select distinct ID , FirstName , LastName ,MonthlySalary , HireDate from Employees
+where HireDate in( select distinct Top 3 HireDate from Employees order by HireDate asc)
+order by HireDate asc;
+
+--------------------------
+--solve q3:
+--Youngest Employees :
+select distinct ID , FirstName , LastName ,MonthlySalary , DateOfBirth from Employees
+where DateOfBirth in( select distinct Top 4 DateOfBirth from Employees order by DateOfBirth desc)
+order by DateOfBirth desc;
