@@ -1,0 +1,74 @@
+--Exercise 1:
+--Write a SQL query to find the total salary paid to employees grouped by each country.
+--Expected Output: Country name and total salary.
+
+ select Countries.Name  AS CountryName ,  sum(Employees.MonthlySalary) as Totalsalary
+ from Countries  INNER JOIN Employees ON  Countries.ID = Employees.CountryID
+ Group By  Countries.Name
+ order by  Countries.Name;
+
+
+-- Exercise 2:
+--Write a SQL query to count the number of employees in each department.
+--Expected Output: Department name and the number of employees in that department.
+ select  Departments.Name as DeptName , count(Employees.ID)as TotalEmployees
+ from Departments  INNER JOIN Employees ON  Departments.ID = Employees.DepartmentID
+ Group By  Departments.Name
+ order by  Departments.Name;
+
+-- Exercise 3:
+--Write a SQL query to find the average salary of employees grouped by department.
+--Expected Output: Department name and average salary.
+ select  Departments.Name as DeptName , avg(MonthlySalary)as avg_Totalsalary
+ from Departments  INNER JOIN Employees ON  Departments.ID = Employees.DepartmentID
+ Group By  Departments.Name
+ order by  Departments.Name;
+
+-- Exercise 4:
+--Write a SQL query to find the number of employees in each country who earn a monthly salary greater than 10,000.
+--Expected Output: Country name and the count of such employees.
+ select Countries.Name  AS CountryName , count(Employees.ID) as TotalEmployees
+ from Countries  INNER JOIN Employees ON  Countries.ID = Employees.CountryID
+ where  MonthlySalary <= 10000
+ Group By  Countries.Name
+ order by  Countries.Name;
+
+
+
+
+
+----------------------------
+----------------------------
+
+
+
+
+ --Exercise 1 – Total Salary by Department :
+ select  Departments.Name as DeptName , sum(MonthlySalary)as Totalsalary
+ from Departments  INNER JOIN Employees ON  Departments.ID = Employees.DepartmentID
+ Group By  Departments.Name
+ order by  Departments.Name;
+
+ --Exercise 2 – Count Employees by Country :
+  select Countries.Name  AS CountryName , count(Employees.ID) as TotalEmployees
+ from Countries  INNER JOIN Employees ON  Countries.ID = Employees.CountryID
+ Group By  Countries.Name
+ order by  Countries.Name;
+
+ --Exercise 3 – Average Bonus Percentage by Department :
+   select  Departments.Name as DeptName , avg(BonusPerc)as avg_TotalBonus
+ from Departments  INNER JOIN Employees ON  Departments.ID = Employees.DepartmentID
+ Group By  Departments.Name
+ order by  Departments.Name;
+ --Exercise 4 – Employees with High Salary by Country :
+  select Countries.Name  AS CountryName , count(Employees.ID) as TotalEmployees
+ from Countries  INNER JOIN Employees ON  Countries.ID = Employees.CountryID
+ where  MonthlySalary >=  2000
+ Group By  Countries.Name
+ order by  Countries.Name;
+ --Exercise 5 – Employees Hired After 2020 by Department :
+  select  Departments.Name as DeptName , count(Employees.ID)as TotalEmployees
+ from Departments  INNER JOIN Employees ON  Departments.ID = Employees.DepartmentID
+ where Employees.HireDate >= '2020-01-01'
+ Group By  Departments.Name
+ order by  Departments.Name;
