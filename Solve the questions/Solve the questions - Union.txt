@@ -1,0 +1,104 @@
+----Question 1 -Departments with many employees or female employees
+--👩‍💼 Create a view for Departments with more than 120 employees.
+--👩‍💻 Create a view for Departments that have at least one female employee.
+--🔗 Combine the results into a single list of DepartmentIDs using UNION ALL (keep duplicates).
+CREATE VIEW Departmentswithmanyemployees AS
+select DepartmentID from Employees
+group by DepartmentID
+having count(ID)>120
+
+CREATE VIEW Sectionsonfemaleemployees AS
+select DepartmentID  from Employees
+where Employees.Gendor = 'F' 
+group by DepartmentID
+having count(ID) >= 1
+
+----
+select * from Departmentswithmanyemployees
+union all
+select * from Sectionsonfemaleemployees
+-------
+--Question 2 -High salary employees or employees with high bonus
+--💰 Create a view for employees with BonusPerc > 20%, including department name.
+--🏆 Create a view for employees with MonthlySalary > 2700, including department name.
+--🔗 Combine both views into a distinct list of employees using UNION.
+
+CREATE VIEW HighlyBonusPercemployees AS
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Departments.Name as department_name ,Employees.MonthlySalary AS salary,Employees.BonusPerc AS Bonus
+FROM  Employees INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+where  Employees.BonusPerc > 0.20
+
+CREATE VIEW HighSalaryEmployees AS
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Departments.Name as department_name , Employees.MonthlySalary AS salary,Employees.BonusPerc AS Bonus
+FROM  Employees INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+where  Employees.MonthlySalary > 2700
+
+----
+select * from HighlyBonusPercemployees
+union
+select * from HighSalaryEmployees
+order by department_name
+
+
+--Question 3-Employees working in China or USA
+--🇨🇳 Create a view for employees working in China, including country name.
+--🇺🇸 Create a view for employees working in the USA, including country name.
+--🔗 Combine both views using UNION to get a distinct list of employees from these countries.
+
+CREATE VIEW EmployeesworkinginChina AS
+
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Countries.Name as Name_ofthecountry
+FROM Employees INNER JOIN Countries ON Employees.CountryID = Countries.ID
+where Countries.Name = 'China'
+
+CREATE VIEW EmployeesworkinginUSA AS
+
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Countries.Name as Name_ofthecountry
+FROM Employees INNER JOIN Countries ON Employees.CountryID = Countries.ID
+where Countries.Name = 'USA'
+
+----
+select * from EmployeesworkinginChina
+union
+select * from EmployeesworkinginUSA
+order by Name_ofthecountry
+
+--Question 4- Employees with very low or very high salaries
+--🪙 Create a view for employees with MonthlySalary < 500.
+--💸 Create a view for employees with MonthlySalary > 2500.
+--🔗 Combine both views using UNION to get a distinct list of employees satisfying either condition.
+
+CREATE VIEW lowSalaryEmployees AS
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Departments.Name as department_name , Employees.MonthlySalary AS salary,Employees.BonusPerc AS Bonus
+FROM  Employees INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+where  Employees.MonthlySalary < 500
+
+CREATE VIEW HighSalaryEmployees AS 
+SELECT Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Departments.Name as department_name , Employees.MonthlySalary AS salary,Employees.BonusPerc AS Bonus
+FROM  Employees INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+where  Employees.MonthlySalary > 2500
+
+select distinct * from lowSalaryEmployees
+union
+select distinct * from HighSalaryEmployees
+order by salary
+
+
+--Question 5-Recently hired or high salary employees
+--🆕 Create a view for employees hired after 2021-01-01, including department name.
+--💵 Create a view for employees with MonthlySalary > 2700, including department name.
+--🔗 Combine both views using UNION to get a distinct list of employees satisfying either condition.
+CREATE VIEW Newemployees AS
+SELECT  Employees.ID, Employees.FirstName+'  '+Employees.LastName AS fullname, Departments.Name as department_name , Employees.HireDate
+FROM  Employees INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+where  Employees.HireDate > '2021-01-01'
+
+CREATE VIEW HighSalaryEmployees AS 
+SELECT Employees.ID, Employees.FirstName + ' ' + Employees.LastName AS fullname, Departments.Name as department_name,Employees.HireDate,Employees.MonthlySalary AS salary
+FROM Employees 
+INNER JOIN Departments ON Employees.DepartmentID = Departments.ID
+WHERE Employees.MonthlySalary > 2700
+----
+select  * from Newemployees
+union
+select  * from HighSalaryEmployees
