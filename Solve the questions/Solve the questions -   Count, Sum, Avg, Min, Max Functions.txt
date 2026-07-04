@@ -1,0 +1,63 @@
+Exercise (from me): What is the average salary of employees who are still employed and working in departments 1 or 2, and whose birth dates fall between January 1, 1997 and December 31, 1998?
+----------------------------
+the solution : 
+Select DepartmentID ,Averagee=avg(MonthlySalary) from employees 
+where DepartmentID in(1,2)
+and DateOfBirth BETWEEN '1997 -01-1' and '1998-12-31' 
+and  ExitDate is null
+GROUP BY DepartmentID;
+--------------------------------
+------------------------------
+
+
+Question 1 — SUM + Conditions 💰⚡
+
+Write a query to calculate:
+
+👉 Total salaries of employees
+
+📌 Conditions:
+Employees are still working (ExitDate IS NULL)
+CountryID is between 2 and 4
+HireDate is between '2020-01-01' and '2022-12-31'
+🎯 المطلوب:
+
+Return one column:
+
+TotalSalaries
+🧩 Question 2 — COUNT + MIN/MAX 🔍🔥
+
+Write a query to display:
+
+👉 Number of employees + lowest and highest salary
+
+📌 Conditions:
+Employees who left the company (ExitDate IS NOT NULL)
+Worked at least one year
+👉 (Hint: DATEDIFF 😉)
+DepartmentID is 1 or 3
+🎯 المطلوب:
+
+Return:
+
+EmployeesCount
+MinSalary
+MaxSalary
+
+
+--------------------------------------------------------
+
+
+
+--solve q1:
+--SUM + Conditions :
+select TotalSum=Sum(MonthlySalary)  from employees
+where ExitDate IS NULL and CountryID  BETWEEN 2 and 4 and HireDate BETWEEN '2020 -01-1' and '2022-12-31'  ;
+
+--solve q2:
+--COUNT + MIN/MAX :
+select TotalEmployees = count (ID) ,TotalSum=Sum(MonthlySalary) , MinSalary=Min(MonthlySalary),MaxSalary=Max(MonthlySalary) from employees
+where ExitDate IS not NULL and DepartmentID in(1,3) and DATEDIFF (YEAR, HireDate, GETDATE()) BETWEEN 1 AND 1 ;
+
+select TotalEmployees = count (ID) ,TotalSum=Sum(MonthlySalary) , MinSalary=Min(MonthlySalary),MaxSalary=Max(MonthlySalary) from employees
+where ExitDate IS not NULL and DepartmentID in(1,3) and   DATEDIFF (YEAR, HireDate, GETDATE()) >=1 ;
