@@ -1,0 +1,32 @@
+three question to practise
+
+1️⃣ Employees Without Exit Date 🏢
+Question:  
+Write a query to display ID, FullName (combine FirstName and LastName), and HireDate for employees who are still working (i.e., ExitDate IS NULL). Alias the full name as EmployeeName.
+
+2️⃣ Salary After Bonus 💰✨
+Question:  
+Write a query to show ID, FirstName, MonthlySalary, and a calculated column called FinalSalary = MonthlySalary + (MonthlySalary * BonusPerc).
+
+3️⃣ Country and Department Info 🌍📂
+Question:  
+Write a query to display ID, FullName (alias), CountryID, and DepartmentID. Alias the combined name as EmployeeFullName.
+
+----------------------------------------
+--------------------------------------
+
+
+--solve q1:
+--Employees Without Exit Date :
+select FirstName + '  ' + LastName  as EmployeeName , ExitDate from Employees
+where ExitDate is null;
+
+
+--solve q2:
+--Salary After Bonus :
+select ID, FirstName , MonthlySalary , YealySalary =MonthlySalary* 12 , BonusAmount= MonthlySalary * BonusPerc  from employees;
+
+--solve q3:
+--Country and Department Info :
+select ID, FirstName + '  ' + LastName  as EmployeeFullName , CountryID , DepartmentID 
+from employees;
