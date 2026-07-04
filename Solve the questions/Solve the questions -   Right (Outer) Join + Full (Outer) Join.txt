@@ -1,0 +1,58 @@
+Question 1
+
+Show all orders and the customer name if it exists.
+(Some orders might not be linked to a customer → still show them)
+
+📊 Output columns:
+
+OrderID
+Amount
+CustomerName
+🧠 Question 2
+
+Show all orders and a status:
+
+"Linked" → if the order has a customer
+"Orphan" → if the order has no customer
+
+📊 Output columns:
+
+OrderID
+Amount
+Status
+🟣 FULL OUTER JOIN (1 Question)
+🧠 Question 3
+
+Show all customers and all orders, and classify each row as:
+
+"Match" → customer has an order
+"Customer Only" → customer with no orders
+"Order Only" → order with no customer
+
+📊 Output columns:
+
+CustomerID
+Name
+OrderID
+Status
+
+
+----------------------------------------
+---------------------------------------
+
+
+
+--🔵 RIGHT OUTER JOIN (2 Questions)
+--🧠 Question 1 :
+SELECT Customers.Name, Orders.Amount, Orders.OrderID
+FROM Customers RIGHT JOIN  Orders ON Customers.CustomerID = Orders.CustomerID
+
+--🧠 Question 2
+--Show all orders and a status:
+SELECT Customers.Name , iif(Customers.CustomerID IS NULL, 'Orphan', 'Linked') as Status, Orders.OrderID ,Orders.Amount
+FROM Customers RIGHT JOIN  Orders ON Customers.CustomerID = Orders.CustomerID
+
+--🟣 FULL OUTER JOIN (1 Question)
+--🧠 Question 3 :
+SELECT Customers.CustomerID, Customers.Name, Orders.OrderID ,Orders.Amount ,iif(Orders.OrderID  IS not NULL and Customers.CustomerID is not null , 'Match',iif(Orders.OrderID  IS  NULL  and Customers.CustomerID is not null, 'Customer Only','Order Only')) as Status
+FROM Customers FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
