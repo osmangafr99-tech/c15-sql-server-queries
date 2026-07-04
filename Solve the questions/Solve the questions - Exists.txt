@@ -1,0 +1,56 @@
+----------------------------------------------------
+--Question 1 - Employees in a specific department :
+--List all employees who belong to the “IT” department.
+--Use EXISTS to check the department.
+
+select ID,FirstName,LastName,DepartmentID from Employees E1
+where exists 
+   ( 
+	select top 1 R='Y' from Departments
+	where Departments.ID = E1.DepartmentID and Departments.Name = 'IT'
+	)
+
+--Question 2 - Employees with high bonus
+--List all employees who have a BonusPerc greater than 20%.
+--Use EXISTS to filter employees.
+
+select ID,FirstName,LastName,BonusPerc from Employees E1
+where exists 
+   ( 
+	select top 1 R='Y' from Employees E2 -- قمت بتسميته E2 للتوضيح
+	where E2.ID = E1.ID and E1.BonusPerc > 0.20
+	)
+--Question 3 -  Employees working in certain countries
+--List all employees who work in countries whose name starts with “U”.
+--Use EXISTS to check the country.
+
+select ID,FirstName,LastName ,CountryID from Employees E1
+where exists 
+   ( 
+	select top 1 R='Y' from Countries
+	where Countries.ID= E1.CountryID and Countries.Name like 'U%'
+	)
+
+--Question 4 - Departments with female employees
+--List all departments that have at least one female employee.
+--Use EXISTS to check for employees in each department.
+
+select ID, Name from Departments DP1
+where exists 
+   ( 
+	select top 1 R='Y' from Employees E1
+	where E1.DepartmentID = DP1.ID and E1.Gendor = 'F'
+	)
+
+--Question 5 - Currently employed employees
+--List all employees who are still employed (ExitDate IS NULL).
+--Use EXISTS to filter employees.
+
+
+select ID,FirstName,LastName,ExitDate from Employees E1
+where exists 
+   ( 
+	select top 1 R='Y' from Employees E2 
+	where E2.ID = E1.ID and E1.ExitDate is null
+	)
+
