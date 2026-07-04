@@ -1,0 +1,52 @@
+-- اسئله
+-- 1 - اعرض عدد الموظفين في كل قسم
+select DepartmentID, TotalCount=Count(ID) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+-- 2 - اعرض مجموع الرواتب في كل قسم
+select DepartmentID, TotalSum_salary=sum(MonthlySalary) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+--3 - اعرض اقل راتب في كل قسم
+select DepartmentID,  MinSalary=Min(MonthlySalary) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+--4 - اعرض اكبر راتب في كل قسم
+select DepartmentID,  MaxSalary=Max(MonthlySalary)  from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+--5 - اعرض اكبر او احدث تاريخ تعيين في كل قسم
+select DepartmentID, MaxHireDate =Max(HireDate) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+--6 - اعرض اصغر او اقدم تاريخ تعيين في كل قسم
+select DepartmentID, minHireDate =min(HireDate) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+--7 - اعرض عدد الموظفين الذين تم تعيينهم في كل سنة
+select YEAR(HireDate), Hire_every_years =Count(ID) from Employees
+       Group By YEAR(HireDate)
+	   order by YEAR(HireDate);
+--8 - اعرض عدد الموظفين و متوسط الرواتب لهم في كل قسم
+select DepartmentID, TotalCountEmployees =Count(ID) , Average=Avg(MonthlySalary)  from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+--9 - اعرض اقل راتب واكبر راتب في كل قسم
+select DepartmentID, Maxsalary =Max(MonthlySalary) , minsalary =min(MonthlySalary) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
+
+--10 - اعرض عدد الموظفين في كل مدينة
+select CountryID, TotalCountEmployeesincity =Count(CountryID)  from Employees
+       Group By CountryID
+	   order by CountryID;
+
+--11 - لكل قسم Bonusperc اعرض مجموع ال 
+select DepartmentID , TotalSum_Bonusperc =sum(Bonusperc) from Employees
+       Group By DepartmentID
+	   order by DepartmentID;
