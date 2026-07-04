@@ -1,0 +1,67 @@
+Practice Questions
+Department & Salary
+
+Write a query to list employees with their department and monthly salary.
+
+Sort the results first by DepartmentID (ascending), then by MonthlySalary (descending).
+
+Country & Hire Date
+
+Write a query to show employees’ names, country, and hire date.
+
+Sort the results first by CountryID (ascending), then by HireDate (ascending).
+
+Gender & Bonus
+
+Write a query to display employees’ names, gender, and bonus percentage.
+
+Sort the results first by Gender (ascending), then by BonusPerc (descending).
+
+Exit Date & Last Name
+
+Write a query to list employees with their exit date and last name.
+
+Sort the results first by ExitDate (ascending), then by LastName (ascending).
+
+Salary & Birth Date
+
+Write a query to show employees’ names, monthly salary, and date of birth.
+
+Sort the results first by MonthlySalary (descending), then by DateOfBirth (ascending)
+
+
+----------------------------------------------------
+----------------------------------------------------
+
+
+--solve q1:
+--Department & Salary
+select ID, FirstName,DepartmentID,MonthlySalary from Employees
+order by DepartmentID asc, MonthlySalary DESC;
+-----------------------------------
+--solve q2:
+--Country & Hire Date :
+
+select ID, FirstName,CountryID,HireDate from Employees
+order by CountryID asc, HireDate ASC;
+
+---------------------------------------
+--solve q3:
+--Gender & Bonus :
+
+select ID, FirstName,Gendor,BonusPerc from Employees
+order by Gendor asc, BonusPerc desc;
+---------------------------------------
+--solve q4:
+-- Exit Date & Last Name :
+
+select ID, LastName,ExitDate from Employees
+order by ExitDate ASC, LastName ASC;
+---------------------------------------
+--solve q5:
+--Salary & Birth Date :
+
+select ID, FirstName,MonthlySalary,DateOfBirth from Employees
+order by MonthlySalary DESC, DateOfBirth ASC;
+
+---------------------------------------
