@@ -1,0 +1,160 @@
+5 Questions To Practise on HR Database : 
+
+🟢 Question 1 – Salary Category
+Classify employees based on their salary.
+Rules:
+< 3000 → Low
+3000–7000 → Medium
+7000 → High
+
+
+Expected columns:
+ID
+FirstName
+MonthlySalary
+SalaryCategory
+
+🔵 Question 2 – Age Group
+Categorize employees based on age (use DateOfBirth).
+Rules:
+< 25 → Young
+25–40 → Adult
+40 → Senior
+
+
+Expected columns:
+ID
+FirstName
+DateOfBirth
+AgeGroup
+
+🟡 Question 3 – Employee Status (Improved)
+Determine employee status more clearly.
+Rules:
+ExitDate IS NULL → Active
+ExitDate IS NOT NULL → Inactive
+Expected columns:
+ID
+FirstName
+ExitDate
+Status
+
+🔴 Question 4 – Bonus Level
+Categorize employees based on BonusPerc.
+Rules:
+NULL → No Bonus
+< 10 → Low Bonus
+10–20 → Medium Bonus
+20 → High Bonus
+
+
+Expected columns:
+ID
+FirstName
+BonusPerc
+BonusLevel
+
+🟣 Question 5 – Country + Department Label
+Create a custom label combining logic from Countries and Departments.
+Rules:
+If Country is "USA" → 'Local Employee'
+If Country is not "USA" → 'Foreign Employee'
+If Department name contains "IT" → 'Tech'
+Otherwise → 'Non-Tech'
+Expected columns:
+ID
+FirstName
+CountryName
+DepartmentName
+EmployeeType
+DepartmentType
+
+
+
+
+
+--Question 1 – Salary Category
+--Classify employees based on their salary.
+--Rules:
+--< 3000 → Low
+--3000–7000 → Medium
+--7000 → High
+
+SELECT Employees.ID, Employees.FirstName + ' ' + Employees.LastName AS fullname,Employees.MonthlySalary AS salary ,
+SalaryCategory = CASE
+    WHEN MonthlySalary <= 1000 THEN  'Low'
+    WHEN MonthlySalary between 1001 and 2000  THEN  'Medium'
+	WHEN MonthlySalary >= 2001  THEN  'High'
+END
+from Employees
+
+----
+--Question 2 – Age Group
+--Categorize employees based on age (use DateOfBirth).
+--Rules:
+--< 25 → Young
+--25–40 → Adult
+--40 → Senior
+SELECT Employees.ID, Employees.FirstName + ' ' + Employees.LastName AS fullname,Employees.DateOfBirth, DATEDIFF(Year , DateOfBirth ,getDate()) AS age,
+AgeGroup = CASE
+    WHEN  DATEDIFF(Year , DateOfBirth ,getDate()) < 25 THEN  'Young'
+    WHEN DATEDIFF(Year , DateOfBirth ,getDate()) between 25 and 40  THEN  'Adult'
+	WHEN  DATEDIFF(Year , DateOfBirth ,getDate())  > 40  THEN  'Senior'
+END
+from Employees
+order by DateOfBirth desc
+----
+
+--Question 3 – Employee Status (Improved)
+--Determine employee status more clearly.
+--Rules:
+--ExitDate IS NULL → Active
+--ExitDate IS NOT NULL → Inactive
+
+SELECT Employees.ID, Employees.FirstName + ' ' + Employees.LastName AS fullname,Employees.ExitDate,
+Status = CASE
+        WHEN ExitDate is null THEN 'Active'
+	   WHEN ExitDate IS NOT NULL THEN 'Inactive'
+END
+from Employees
+----
+
+-- Question 4 – Bonus Level
+--Categorize employees based on BonusPerc.
+--Rules:
+--NULL → No Bonus
+--< 10 → Low Bonus
+--10–20 → Medium Bonus
+--20 → High Bonus
+
+SELECT Employees.ID, Employees.FirstName + ' ' + Employees.LastName AS fullname,Employees.BonusPerc AS Bonus ,
+BonusLevel = CASE
+    WHEN BonusPerc is null THEN  'No Bonus'
+    WHEN BonusPerc < 0.10 THEN  'Low Bonus'
+    WHEN BonusPerc between 0.10 and 0.20  THEN  'Medium Bonus'
+	ELSE 'High Bonus'
+END
+from Employees
+
+--Question 5 – Country + Department Label
+--Create a custom label combining logic from Countries and Departments.
+--Rules:
+--If Country is "USA" → 'Local Employee'
+--If Country is not "USA" → 'Foreign Employee'
+--If Department name contains "IT" → 'Tech'
+--Otherwise → 'Non-Tech'
+
+SELECT Employees.ID, Employees.FirstName, Departments.Name as DepName, Countries.Name AS CountyName ,
+ EmployeeType =
+CASE
+    WHEN  Countries.Name ='USA' THEN 'Local Employee'
+   ELSE 'Foreign Employee'
+END,
+
+DepartmentType =
+CASE
+    WHEN  Departments.Name LIKE '%IT%' THEN 'Tech'
+    ELSE 'Non-Tech'
+END
+from Employees
+INNER JOIN  Departments ON Employees.DepartmentID = Departments.ID INNER JOIN  Countries ON Employees.CountryID = Countries.ID
