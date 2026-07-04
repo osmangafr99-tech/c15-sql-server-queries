@@ -1,0 +1,83 @@
+--Task 1 – Students Table
+
+--Create a table Students with columns:
+
+--ID → primary key
+--Name → not null
+--Age → not null
+--Country → default value = 'Algeria'
+
+
+CREATE TABLE Students (
+   ID int NOT NULL primary key,
+   Name varchar(255) NOT NULL,
+   Age int NOT NULL,
+   Country  varchar(255) DEFAULT 'Algeria'
+);
+
+
+
+--Task 2 – Products Table
+--Create a table Products with columns:
+--ProductID → primary key
+--ProductName → not null
+--Price → not null
+--Stock → default = 0
+--CreatedAt → default = current date
+
+CREATE TABLE Products (
+   ID int NOT NULL primary key,
+   ProductName varchar(255) NOT NULL,
+   Price smallmoney NOT NULL,
+   Stock int DEFAULT  0,
+   CreatedAt  date DEFAULT GETDATE()
+);
+
+--Task 3 – Doctors Table
+
+--You already have a table Doctors:
+
+--ID
+--Name
+--Specialty
+--City
+--Add a DEFAULT constraint to the City column so that:
+--City = 'Oran'
+--Use ALTER TABLE
+--Name the constraint
+
+CREATE TABLE Doctors (
+   ID int NOT NULL primary key,
+   Name varchar(255) NOT NULL,
+   Specialty varchar(255) NOT NULL,
+   City varchar(255) NOT NULL,
+);
+
+ALTER TABLE Doctors
+ADD CONSTRAINT df_City
+DEFAULT 'Oran' FOR City;
+
+
+
+-- Task 4 – Drop DEFAULT
+--From the Doctors table, remove the DEFAULT constraint you added on City.
+
+ALTER TABLE Doctors
+DROP Constraint  df_City;
+
+
+
+-- Task 5 – Accounts Table
+--Create a table Accounts with columns:
+--ID → primary key
+--UserName → not null
+--Status → default = 'Active'
+--CreatedAt → default = current date
+
+
+CREATE TABLE Accounts (
+   ID int NOT NULL primary key,
+   UserName varchar(255) NOT NULL,
+   Status varchar(255) DEFAULT 'Active' ,
+   CreatedAt  date DEFAULT GETDATE() 
+);
