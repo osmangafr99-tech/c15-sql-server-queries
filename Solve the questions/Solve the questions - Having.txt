@@ -1,0 +1,66 @@
+--Departments with more than 140 employees q1 :
+
+select DepartmentID, TotalCountEmployees=Count(id) from Employees
+  Group By DepartmentID
+   having Count(id) > 100
+
+-----------------------------------
+
+
+   --Departments where total salaries exceed 20000 q2 :
+   select DepartmentID, TotalSum_salary=sum(MonthlySalary) from Employees
+       Group By DepartmentID
+	   having sum(MonthlySalary) > 20000
+	   order by DepartmentID;
+	  -----------------------------------
+   --Years in which more than 50 employees were hired q3 :
+   select YEAR(HireDate), Hire_every_years =Count(ID) from Employees
+       Group By YEAR(HireDate)
+	   having Count(ID) > 50
+	   order by YEAR(HireDate);
+
+-----------------------------------
+
+   --Years in which more than 50 employees were hired q4 :
+    select DepartmentID ,HighestSalary = Max(MonthlySalary) from Employees
+    Group By DepartmentID
+    having max(MonthlySalary) >= 3000
+	order by DepartmentID;
+	   --Countries with >= 150 employees q5 :
+-----------------------------------
+
+	   select CountryID, TotalCountEmployeesincity =Count(CountryID)  from Employees
+       Group By CountryID
+	    having Count(CountryID) >=150
+	   order by CountryID;
+-----------------------------------
+	  --Departments where total BonusPerc is greater than 12 q6 :
+
+	  select DepartmentID , TotalSum_Bonusperc =sum(Bonusperc) from Employees
+       Group By DepartmentID
+	   having sum(Bonusperc)  >= 12
+	   order by DepartmentID;
+-----------------------------------
+	  --Departments where the lowest salary is < 210 q7 :
+
+ select DepartmentID , LowestSalary = Min(MonthlySalary) 
+from Employees
+group by DepartmentID
+having Min(MonthlySalary)  < 210
+order by DepartmentID;
+
+-----------------------------------
+	  --Departments with more employees than the average per department q8 :
+
+
+
+   SELECT DepartmentID, 
+       COUNT(ID) AS Total_Employeesin_Department,
+       (SELECT COUNT(id)/MAX(DepartmentID) FROM Employees) AS Total_Employees
+FROM Employees
+GROUP BY DepartmentID
+HAVING COUNT(ID) >= (SELECT COUNT(id)/MAX(DepartmentID) FROM Employees)
+ORDER BY DepartmentID;
+
+
+ 
