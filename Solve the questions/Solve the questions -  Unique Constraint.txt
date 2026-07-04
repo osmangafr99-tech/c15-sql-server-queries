@@ -1,0 +1,85 @@
+
+-- Task 1 – Books Library 📚
+--Create a table called Books with:
+--ISBN → must be unique
+--Title → not null
+--Author → varchar(100)
+--PublishedYear → int
+
+CREATE TABLE Books (
+   ISBN int  UNIQUE,
+   Title varchar(255) NOT NULL,
+   Author varchar(100),
+   PublishedYear int
+);
+
+
+-- Task 2 – Airline Flights ✈️
+--Create a table called Flights with:
+--FlightNumber → int
+--Date → date
+--Departure → varchar(50)
+--Arrival → varchar(50)
+--Ensure that a FlightNumber on the same Date cannot repeat
+
+
+CREATE TABLE Flights (
+   FlightNumber int,
+   Date  date NOT NULL,
+   Departure varchar(50),
+   Arrival  varchar(50),
+  CONSTRAINT UC_Flights UNIQUE (FlightNumber,Date)
+);
+
+
+
+
+
+
+-- Task 3 – Movie Theater 🎬
+--Create a table called Seats with:
+--TheaterID → int
+--SeatNumber → varchar(10)
+--ShowID → int
+--Add a UNIQUE constraint so that the same seat in the same show cannot be booked twice
+
+
+CREATE TABLE Seats (
+   TheaterID int  ,
+   SeatNumber varchar(10) ,
+   ShowID int,
+  CONSTRAINT UC_Seats UNIQUE (SeatNumber,ShowID,TheaterID)
+);
+
+
+--Task 4 – Hospital Patients 🏥
+--Create a table called Patients with:
+--PatientID → int
+--NationalID → varchar(20)
+--Name → varchar(50)
+--DateOfBirth → date
+--Add a UNIQUE constraint on NationalID
+
+CREATE TABLE Patients (
+   PatientID int  PRIMARY KEY,
+   NationalID varchar(20) UNIQUE,
+   Name varchar(50),
+   DateOfBirth  date
+);
+
+
+
+
+-- Task 5 – Sports Club Membership ⚽
+--Create a table called Memberships with:
+--MemberID → int
+--Sport → varchar(50)
+--Season → varchar(20)
+--Add a UNIQUE constraint so that a member cannot register for the same sport in the same season twice
+
+CREATE TABLE Memberships (
+   MemberID int ,
+   Sport varchar(50) ,
+   Season varchar(20),
+     CONSTRAINT UC_Memberships UNIQUE (MemberID,Season,Sport)
+);
