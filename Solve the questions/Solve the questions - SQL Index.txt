@@ -1,0 +1,98 @@
+------------------------------------------------------------
+--Practical Questions :
+
+
+-- Exercise 1 – Orders System 🛒
+--Table:
+--Orders(id, customer_name, product, order_date, status)
+--👉 Write an SQL statement to create an index on the status column.
+
+CREATE TABLE Orders (
+   id int NOT NULL primary key,
+   customer_name varchar(255) NOT NULL,
+   product varchar(255) NOT NULL ,
+  order_date date NOT NULL,
+   status varchar(255)
+);
+CREATE INDEX idx_Orders
+ON Orders (status);
+
+
+--Exercise 2 – User Accounts System 👤
+--Table:
+--Users(id, username, email, password)
+--👉 Write an SQL statement to ensure that email is unique using an index.
+
+CREATE TABLE Users (
+   ID int NOT NULL primary key,
+   UserName varchar(255) NOT NULL,
+   email varchar(255) NOT NULL,
+   password varchar(20) NOT NULL
+   );
+CREATE UNIQUE INDEX idx_Accounts
+ON Users (email);
+
+
+--xercise 3 – School System 🎓
+--Table:
+--Students(id, first_name, last_name, city)
+--👉 Create an index on last_name and first_name together.
+
+CREATE TABLE Students (
+   id int NOT NULL primary key,
+   first_name varchar(255) NOT NULL,
+   last_name varchar(255) NOT NULL,
+   city varchar(255) 
+);
+CREATE INDEX idx_student_name
+ON Students (last_name, first_name);
+
+
+--Theoretical Questions :
+
+--Question 1
+--👉 Why do indexes make SELECT faster ⚡ but INSERT/UPDATE slower 🐢?
+
+----
+
+--Fast SELECT Operations:Without an index,the database engine must perform a "Full Table Scan," checking every single row from top to bottom to find the matching data. 
+--When an index is created, the database builds a separate data structure (usually a $B-Tree$). This structure sorts the column values logically and holds pointers to their actual physical locations. 
+--This allows the engine to jump directly to the required data in a few steps, drastically speeding up queries.
+--Slow INSERT / UPDATE / DELETE Operations:When you insert, update, or delete a row, the database cannot just write to the main table. 
+--It must also go to the separate index structure, insert or modify the keys, and rearrange or rebalance the tree to keep it accurate and sorted. 
+--This extra overhead and write activity are what cause these operations to slow down.
+
+
+-------
+
+-- Question 2
+--👉 What is the difference between:
+--Clustered Index 🚀
+--Non-Clustered Index 📑
+
+-----
+
+--Clustered Index vs. Non-Clustered Index
+--Physical Storage
+
+--Clustered Index: It physically reorders and stores the actual data rows of the table on the disk based on the index key.
+
+--Non-Clustered Index: It does not alter the physical order of the table; instead, it is stored in a completely separate structure from the data rows.
+
+--Count per Table
+
+--Clustered Index: You can have only one Clustered Index per table, because the data rows can only be physically sorted and stored in one way.
+
+--Non-Clustered Index: You can have multiple Non-Clustered Indexes on a single table (up to hundreds depending on the DBMS).
+
+--Leaf Level
+
+--Clustered Index: The leaf nodes of the index contain the actual data rows themselves.
+
+--Non-Clustered Index: The leaf nodes contain pointers or locators (like Row IDs or Clustered Keys) that point to the actual data locations.
+
+--Automatic Creation
+
+--Clustered Index: It is automatically created by default in most systems when a PRIMARY KEY is defined.
+
+--Non-Clustered Index: It is automatically created when a UNIQUE Constraint is defined, or it can be created manually using the CREATE INDEX statement.
