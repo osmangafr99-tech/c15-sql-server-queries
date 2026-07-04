@@ -1,0 +1,45 @@
+
+ --Question 1 – Average amount of orders :
+SELECT Customers.CustomerID, Customers.Name, avg(Orders.Amount)as avg_Amount
+FROM Customers Left JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+Group By Customers.CustomerID, Customers.Name
+order by Customers.CustomerID;
+
+--Question 2 – Smallest order amount:
+SELECT Customers.CustomerID, Customers.Name, MIN(Orders.Amount)as MIN_Amount
+FROM Customers Left JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+Group By Customers.CustomerID, Customers.Name
+order by Customers.CustomerID;
+
+--Question 3 – Customer Status (Has Orders / No Orders):
+SELECT Customers.CustomerID, Customers.Name, Orders.Amount ,IIF(Orders.Amount IS NULL, 'No Orders', 'Has Orders') AS stuts
+FROM Customers Left JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+order by Customers.CustomerID,Customers.Name;
+
+--Another solution:
+
+SELECT 
+    Customers.CustomerID, 
+    Customers.Name, 
+    CASE 
+        WHEN COUNT(Orders.CustomerID) > 0 THEN 'Has Orders' 
+        ELSE 'No Orders' 
+    END AS Status
+FROM Customers 
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+GROUP BY Customers.CustomerID, Customers.Name
+ORDER BY Customers.CustomerID;
+
+--Question 4 – Total amount of orders with condition:
+SELECT Customers.CustomerID, Customers.Name, sum(Orders.Amount)as total_Amount
+FROM Customers Left JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+Group By Customers.CustomerID, Customers.Name
+having  sum(Orders.Amount) < 300 or sum(Orders.Amount) is null
+order by Customers.CustomerID;
+
+
+
+
+SELECT Customers.CustomerID, Customers.Name, Orders.Amount ,IIF(Orders.Amount IS NULL, 'No Orders', 'Has Orders') AS stuts
+FROM Customers Left JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+order by Customers.CustomerID,Customers.Name;
