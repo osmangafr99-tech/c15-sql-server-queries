@@ -1,0 +1,51 @@
+🧠 Exercise 1 – Simple inclusion
+
+Find employees whose FirstName starts with “J”, “K”, or “L”.
+
+🧠 Exercise 2 – Negation
+
+Find employees whose FirstName does NOT start with “M” or “N”.
+
+🧠 Exercise 3 – Range
+
+Find employees whose FirstName starts with any letter from “D” to “H”.
+
+🧠 Exercise 4 – Single character match
+
+Find employees whose FirstName has “o” as the second character.
+
+🧠 Exercise 5 – Combination
+
+Find employees whose FirstName starts with “A” or “B” but the second character is NOT “l” or “r”.
+
+Solution:
+--Find employees whose FirstName starts with “J”, “K”, or “L”.
+select ID,FirstName , LastName 
+from Employees 
+where FirstName like '[JKL]%';
+
+
+--Find employees whose FirstName does NOT start with “M” or “N”.
+select ID,FirstName , LastName 
+from Employees 
+where FirstName not like '[MN]%';
+
+
+--Find employees whose FirstName starts with any letter from “D” to “H”.
+select ID,FirstName , LastName 
+from Employees 
+where FirstName  like '[D-H]%'
+order by FirstName;
+
+
+--Find employees whose FirstName has “o” as the second character.
+select ID,FirstName , LastName 
+from Employees 
+where FirstName  like '_o%'
+order by FirstName;
+
+
+--Find employees whose FirstName starts with “A” or “B” but the second character is NOT “l” or “r”.
+select ID,FirstName , LastName 
+from Employees 
+where FirstName like 'A[^lr]%' or FirstName like 'B[^lr]%' ;
