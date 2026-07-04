@@ -1,0 +1,87 @@
+--Task 1 – Products Table
+--Create a table Products with:
+--ProductID → primary key
+--ProductName → not null
+--Price → must be greater than 0
+--Stock → must be 0 or more
+
+CREATE TABLE Products (
+   ProductID int NOT NULL PRIMARY KEY, 
+   ProductName varchar(255) NOT NULL,
+   Price smallmoney,
+   Stock int,
+   CONSTRAINT CHK_Products_Price CHECK (Price > 0),
+   CONSTRAINT CHK_Products_Stock CHECK (Stock >= 0)       
+);
+
+-- Task 2 – Students Table
+--Create a table Students with:
+--ID → primary key
+--Name → not null
+--Age → must be between 10 and 25
+--Grade → must be A, B, C, D, or F
+
+CREATE TABLE Students (
+   ID int NOT NULL primary key,
+   Name varchar(255) NOT NULL,
+   Age int ,
+   Grade varchar(1),
+   CONSTRAINT CHK_Age CHECK (Age Between 10 and 25),
+   CONSTRAINT CHK_Grade CHECK (Grade in ('A','B','C','D' ,'F'))
+);
+
+
+-- Task 3 – Employees Table
+--Create a table Employees with:
+--EmployeeID → primary key
+--Name → not null
+--Department → must be ‘HR’, ‘IT’, or ‘Finance’
+--Salary → must be ≥ 300 if Department = ‘HR’
+
+CREATE TABLE Employees (
+   EmployeeID int NOT NULL primary key,
+   Name varchar(255) NOT NULL,
+   Department varchar(255) ,
+   Salary smallmoney ,
+   CONSTRAINT CHK_Department CHECK (Department in ('HR','IT','Finance') ),
+   CONSTRAINT CHK_Salary CHECK (Department <> 'HR' OR Salary >= 300)
+);
+
+-- Task 4 – Orders Table
+--Create a table Orders with:
+--OrderID → primary key
+--CustomerName → not null
+--Quantity → must be > 0
+--Discount → must be between 0 and 50
+--If Quantity > 10, Discount cannot exceed 20
+
+
+CREATE TABLE Orders (
+   OrderID int NOT NULL primary key,
+   CustomerName varchar(255) NOT NULL,
+   Quantity int ,
+   Discount int,
+   CONSTRAINT CHK_Quantity CHECK (Quantity > 0),
+   CONSTRAINT CHK_Discount CHECK (Discount BETWEEN 0 AND 50 AND IIF(Quantity > 10, Discount <= 20, 1 = 1))
+);
+
+
+--Task 5 – Accounts Table
+--Create a table Accounts with:
+--ID → primary key
+--Username → not null
+--AccountType → must be ‘Admin’, ‘User’, or ‘Guest’
+--Status → must be ‘Active’ or ‘Inactive’
+--If AccountType = ‘Admin’, Status must be ‘Active’
+
+CREATE TABLE Accounts (
+   ID int NOT NULL primary key,
+   UserName varchar(255) NOT NULL,
+   AccountType varchar(255),
+   Status varchar(255),
+   CONSTRAINT CHK_AccountType CHECK (AccountType in ('Admin','User','Guest') ),
+   CONSTRAINT CHK_Status CHECK (AccountType <> 'Admin' OR Status = 'Active')
+   );
+
+    
+   -- 
