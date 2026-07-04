@@ -1,0 +1,41 @@
+Details of employees from the Employees HireDate table who were hired between
+ the date '2020-01-01' and the date '2025-12-31', provided that they work in departments (1, 3, or 5) only!
+-------------------------------------
+
+the solution : 
+
+Select * from Employees 
+where HireDate Between '2020-01-01' and '2025-12-31' and DepartmentID in(1,3,5)  order by HireDate desc;
+
+
+--------------------------------------
+
+
+
+
+Determine the age of employees between 40 and 50, ranking them from youngest to oldest.
+
+-------------------------------------------
+the solution : 
+
+Select DateOfBirth, Age = DATEDIFF(Year , DateOfBirth ,getDate()) ,ID , FirstName  from Employees 
+where  DATEDIFF(Year, DateOfBirth ,getDate()) Between 25 and 40  order by age asc;
+
+
+-------------------------------
+
+
+
+Display the employee's name (first and last), date of birth, and age.
+
+(Requirements: Age must be between 25 and 40; Date of birth must be in June or December.) The results will be displayed sorted by age from oldest to youngest.
+
+-----------------------------------------------------------------------------
+
+the solution : 
+
+SELECT FirstName + '' + LastName AS FullName, DateOfBirth, DATEDIFF (YEAR, DateOfBirth, GETDATE()) AS Age
+FROM Employees
+WHERE (DATEDIFF (YEAR, DateOfBirth, GETDATE()) BETWEEN 25 AND 40) AND (Month (DateOfBirth) = 6 OR Month (DateOfBirth) = 12)
+ORDER BY Age DESC;
+          
